@@ -1,0 +1,16 @@
+diff a/makefile b/makefile
+index 3c90b19..b03997c 100644
+--- a/makefile
++++ b/makefile
+@@ -97,9 +97,9 @@ CMAKECONFIGDIR=$(libdir)\cmake\OpenSSL
+ CC="cl"
+ CPP=$(CC) /EP /C
+ CPPFLAGS=
+-CFLAGS=/W3 /wd4090 /nologo /O2 -FS
++CFLAGS=/W3 /wd4090 /nologo /O2 /FS -Gy -Gw -GL -MT
+ LD="link"
+-LDFLAGS=/nologo /debug
++LDFLAGS=/NOLOGO /SUBSYSTEM:CONSOLE /DYNAMICBASE /NXCOMPAT /LTCG /OPT:REF /OPT:ICF=5 /MANIFEST:EMBED /INCREMENTAL:NO /NODEFAULTLIB:MSVCRT
+ EX_LIBS=
+ 
+ PERL=C:\Strawberry\perl\bin\perl.exe

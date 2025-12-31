@@ -1,0 +1,18 @@
+diff --git a/Makefile.msc b/Makefile.msc
+index 9c65153..9aa05fa 100644
+--- a/win32/Makefile.msc
++++ b/win32/Makefile.msc
+@@ -22,10 +22,10 @@ AS = ml
+ LD = link
+ AR = lib
+ RC = rc
+-CFLAGS  = -nologo -MD -W3 -O2 -Oy- -Zi -Fd"zlib" $(LOC)
++CFLAGS  = -nologo -O1 -Gy -Gw -GL -MT $(LOC)
+ WFLAGS  = -D_CRT_SECURE_NO_DEPRECATE -D_CRT_NONSTDC_NO_DEPRECATE
+-ASFLAGS = -coff -Zi $(LOC)
+-LDFLAGS = -nologo -debug -incremental:no -opt:ref
++ASFLAGS = -coff $(LOC)
++LDFLAGS = /NOLOGO /DYNAMICBASE /NXCOMPAT /LTCG /OPT:REF /OPT:ICF=5 /MANIFEST:EMBED /INCREMENTAL:NO /NODEFAULTLIB:MSVCRT
+ ARFLAGS = -nologo
+ RCFLAGS = /dWIN32 /r
+ 
