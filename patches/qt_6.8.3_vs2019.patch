@@ -1,0 +1,12 @@
+diff a/qtbase/cmake/QtWindowsHelpers.cmake b/qtbase/cmake/QtWindowsHelpers.cmake
+index 7a48e09..40fcce9 100644
+--- a/qtbase/cmake/QtWindowsHelpers.cmake
++++ b/qtbase/cmake/QtWindowsHelpers.cmake
+@@ -2,6 +2,7 @@
+ # SPDX-License-Identifier: BSD-3-Clause
+ 
+ function(qt_internal_check_msvc_versions)
++    return()
+     if(NOT MSVC OR QT_NO_MSVC_MIN_VERSION_CHECK)
+         return()
+     endif()
