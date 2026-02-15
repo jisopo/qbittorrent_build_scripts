@@ -339,4 +339,6 @@ Cmake 3.29.2 который идёт в комплекте с strawberry perl 5.
   <details>
   <summary>Применение патча (видео) (кликабельно)</summary>
 
+https://github.com/user-attachments/assets/09a8fc8a-e6ff-4426-b9a1-e7b80c05574c
+
   </details>
