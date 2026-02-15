@@ -331,4 +331,8 @@ Open .patch file (located in `qbittorrent_build_scripts\patches`) -> File -> App
   <details>
   <summary>Path apply (video) (clickable)</summary>
 
+
+https://github.com/user-attachments/assets/09a8fc8a-e6ff-4426-b9a1-e7b80c05574c
+
+
   </details>
