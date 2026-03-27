@@ -1,0 +1,56 @@
+ src/base/CMakeLists.txt            | 11 +++++++++++
+ src/base/utils/randomlayer_win.cpp | 11 ++++++++++-
+ 2 files changed, 21 insertions(+), 1 deletion(-)
+
+diff --git a/src/base/CMakeLists.txt b/src/base/CMakeLists.txt
+index 5bb0077a9..d578b0ecc 100644
+--- a/src/base/CMakeLists.txt
++++ b/src/base/CMakeLists.txt
+@@ -244,6 +244,17 @@ if (CMAKE_SYSTEM_NAME STREQUAL "Darwin")
+     )
+ elseif (CMAKE_SYSTEM_NAME STREQUAL "Windows")
+     target_link_libraries(qbt_base PRIVATE Iphlpapi PowrProf)
++
++    # Windows 7
++    if (${CMAKE_SYSTEM_VERSION} EQUAL 6.1)
++        target_compile_definitions(qbt_base PUBLIC WIN7)
++    # Windows 8
++    elseif (${CMAKE_SYSTEM_VERSION} EQUAL 6.2) 
++        target_compile_definitions(qbt_base PUBLIC WIN8)
++    # Windows 8+
++    else()
++        target_compile_definitions(qbt_base PUBLIC WIN8_OR_UP)
++    endif()
+ endif()
+ 
+ if (NOT GUI)
+diff --git a/src/base/utils/randomlayer_win.cpp b/src/base/utils/randomlayer_win.cpp
+index 946a26c94..c5475e4d5 100644
+--- a/src/base/utils/randomlayer_win.cpp
++++ b/src/base/utils/randomlayer_win.cpp
+@@ -44,7 +44,11 @@ namespace
+         using result_type = uint32_t;
+ 
+         RandomLayer()
+-            : m_processPrng {Utils::OS::loadWinAPI<PPROCESSPRNG>(u"BCryptPrimitives.dll"_s, "ProcessPrng")}
++            #if defined(WIN7)
++            : m_processPrng{ Utils::OS::loadWinAPI<PRTLGENRANDOM>(u"Advapi32.dll"_s, "SystemFunction036") }
++            #elif defined(WIN8) || defined(WIN8_OR_UP)
++            : m_processPrng{ Utils::OS::loadWinAPI<PPROCESSPRNG>(u"BCryptPrimitives.dll"_s, "ProcessPrng") }
++            #endif
+         {
+             if (!m_processPrng)
+                 qFatal("Failed to load ProcessPrng().");
+@@ -71,7 +75,12 @@ namespace
+         }
+ 
+     private:
++        #if defined(WIN7)
++        using PRTLGENRANDOM = BOOL (WINAPI*)(PVOID, ULONG);
++        const PRTLGENRANDOM m_processPrng = nullptr;
++        #elif defined(WIN8) || defined(WIN8_OR_UP)
+         using PPROCESSPRNG = BOOL (WINAPI *)(PBYTE, SIZE_T);
+         const PPROCESSPRNG m_processPrng = nullptr;
++        #endif
+     };
+ }
